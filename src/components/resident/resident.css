@@ -1,0 +1,8 @@
+.Invisible{
+    visibility: hidden;
+    display: none;
+}
+
+.btn{
+    margin:5px;
+}

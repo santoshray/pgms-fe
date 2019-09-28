@@ -1,0 +1,15 @@
+.pg-no-padding-left {
+    padding-left: 0;
+}
+
+.pg-no-padding-right {
+    padding-right: 0;
+}
+
+.pg-padding-top {
+    padding-top: 20px;
+}
+
+.Invisible{
+    visibility:hidden;
+}
