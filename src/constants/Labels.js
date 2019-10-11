@@ -39,7 +39,8 @@ const Labels={
         COMPANY_INFO:"Company Info",
         IDENTITY_PROOF:"Identity Proof",
         EMERGENCY_CONTACT:"Emergency Contact",
-        PREFERENCES:"Preferences"
+        PREFERENCES:"Preferences",
+        REGISTRATION_COMPLETE:"Registration Complete"
     },
     RESIDENT_FORM_STATUS:{
         COMPLETE:"Complete",

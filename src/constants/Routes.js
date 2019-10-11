@@ -9,5 +9,6 @@ export default {
     CREATE_EXPENSE:"/createexpense",
     ROOMS:'/rooms',
     CREATE_NEW_ROOM:"/createroom",
-    RESIDENTS:"/resident"
+    RESIDENTS:"/resident",
+    RESIDENT_PROFILE:"/profile"
 }

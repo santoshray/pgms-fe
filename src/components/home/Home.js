@@ -16,6 +16,7 @@ import UserList from '../user/UserList';
 import RoomList from '../rooms/RoomList';
 import RoomForm from '../rooms/RoomForm';
 import CreateResidentForm from '../resident/CreateResidentForm';
+import ResidentProfile from '../resident/ResidentProfile';
 
 class Home extends React.Component {
 
@@ -38,6 +39,7 @@ class Home extends React.Component {
                 <Route path={Routes.CREATE_EXPENSE} component={CreateExpenseForm} />
                 <Route path={Routes.EXPENSES} component={Expenses} />
                 <Route path={Routes.RESIDENTS} component={CreateResidentForm} />
+                <Route path={Routes.RESIDENT_PROFILE} component={ResidentProfile} />
 
                 <Route path="/table" component={DemoTable} />
             </Router>

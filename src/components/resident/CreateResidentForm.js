@@ -32,6 +32,7 @@ class CreateResidentForm extends React.Component {
             resident:{},
             formtype:Labels.RESIDENT_FORMS.BASIC_INFO,
             formCompleteStatus:Labels.RESIDENT_FORM_STATUS.INCOMPLETE,
+            user:{},
         }
     }
 
@@ -44,11 +45,11 @@ class CreateResidentForm extends React.Component {
         if (this.readOnlyCondition())
            this.setState({...this.state,isReadOnly:true}) 
     }
-
     async componentDidMount(){
         if (!this.props.location.state)
             return;
         const resident=this.props.location.state.record;
+        
         if (resident.residentId) {
             const response =await ResidentService.getResidentProfile(resident.residentId);
             debugger;
@@ -63,28 +64,46 @@ class CreateResidentForm extends React.Component {
         event.preventDefault();
         const data = JSONUtil.formToJson(event.target);
         console.log(data);
-//       const resident = await ResidentService.updateResident(data);
+        const resident = await ResidentService.registerResident(data);
+       
+        console.log(resident);
 //        this.props.history.push(Routes.RESIDENTS);
-        this.setState({formtype:Labels.RESIDENT_FORMS.MAIL_ADDRESS});
-        // set the Resdident ID
-        //this.setState({residentId:response.data.residentId});
+//        this.setState({formtype:Labels.RESIDENT_FORMS.MAIL_ADDRESS});
+        this.setState({formtype:Labels.RESIDENT_FORMS.COMPANY_INFO});
+        
+
+        // set the basicInfo
+        this.setState({...this.state,user:{userId:resident.data.userId,pgId:resident.data.pgId}});
     }
 
     async handleMailAddresForm(event){
         event.preventDefault();
-        const data = JSONUtil.formToJson(event.target);
+        let  data = JSONUtil.formToJson(event.target);
+        let  payload = {};
         console.log(data);
-//       const resident = await ResidentService.registerResident(data);
-//        this.props.history.push(Routes.RESIDENTS);
+        data = JSON.parse(data);
+        payload.mailAddress = data;
+ 
+        payload.userId = this.state.user.userId;
+        payload.pgId = this.state.user.pgId;
+        data = JSON.stringify(payload);
+        const resident = await ResidentService.updateResidentInfo(data);
+
         this.setState({formtype:Labels.RESIDENT_FORMS.PERMANENT_ADDRESS});
     }
 
     async handlePermanentAddresForm(event){
         event.preventDefault();
-        const data = JSONUtil.formToJson(event.target);
+        let  data = JSONUtil.formToJson(event.target);
+        let  payload = {};
         console.log(data);
-//       const resident = await ResidentService.registerResident(data);
-//       this.props.history.push(Routes.RESIDENTS);
+        data = JSON.parse(data);
+        payload.permanentAddress = data;
+ 
+        payload.userId = this.state.user.userId;
+        payload.pgId = this.state.user.pgId;
+        data = JSON.stringify(payload);
+        const resident = await ResidentService.updateResidentInfo(data);
 
         this.setState({formtype:Labels.RESIDENT_FORMS.COMPANY_INFO});
     }
@@ -92,9 +111,27 @@ class CreateResidentForm extends React.Component {
 
     async handleCompanyInfoForm(event){
         event.preventDefault();
-        const data = JSONUtil.formToJson(event.target);
+        let  data = JSONUtil.formToJson(event.target);
+        let  payload = {};
+        let address ={};
+        let companyInfo ={};
+        data = JSON.parse(data);
+        address.line1   = data.line1;
+        address.line2   = data.line2;
+        address.city    = data.city;
+        address.state   = data.state;
+        address.country = data.country;
+        companyInfo.name = data.name; 
+        companyInfo.companyPhoneNumber = data.companyPhoneNumber;
+        companyInfo.address = address;
+        payload.companyInfo = companyInfo;
+        payload.userId = this.state.user.userId;
+        payload.pgId = this.state.user.pgId;
+        data = {};
+        data = JSON.stringify(payload);
         console.log(data);
- //       const resident = await ResidentService.registerResident(data);
+        debugger;
+        const resident = await ResidentService.updateResidentInfo(data);
 //        this.props.history.push(Routes.RESIDENTS);
         this.setState({formtype:Labels.RESIDENT_FORMS.IDENTITY_PROOF});
     }
@@ -103,33 +140,69 @@ class CreateResidentForm extends React.Component {
 
     async handleIdForm(event){
         event.preventDefault();
-        const data = JSONUtil.formToJson(event.target);
+        let  data = JSONUtil.formToJson(event.target);
+        let  payload = {};
         console.log(data);
- //       const resident = await ResidentService.updateResident(data);
-//        this.props.history.push(Routes.RESIDENTS);
+        data = JSON.parse(data);
+        payload.identification = data;
+ 
+        payload.userId = this.state.user.userId;
+        payload.pgId = this.state.user.pgId;
+        data = JSON.stringify(payload);
+        const resident = await ResidentService.updateResidentInfo(data);
         this.setState({formtype:Labels.RESIDENT_FORMS.EMERGENCY_CONTACT});
-        // set the Resdident ID
-        //this.setState({residentId:response.data.residentId});
 
     }
 
     async handleEmergencyForm(event){
         event.preventDefault();
-        const data = JSONUtil.formToJson(event.target);
+        let  data = JSONUtil.formToJson(event.target);
+        let  payload = {};
+        let address ={};
+        let emergencyContact = {}
         console.log(data);
- //       const resident = await ResidentService.registerResident(data);
-//        this.props.history.push(Routes.RESIDENTS);
+        data = JSON.parse(data);
+        payload.emergencyContact = data;
+        address.line1   = data.line1;
+        address.line2   = data.line2;
+        address.city    = data.city;
+        address.state   = data.state;
+        address.country = data.country;
+        
+        emergencyContact.firstName = data.firstName;
+        emergencyContact.middleName = data.middleName;
+        emergencyContact.lastName = data.lastName;
+        emergencyContact.address = address;
+        emergencyContact.homePhoneNumber = "11111111";
+        emergencyContact.mobilePhoneNumber = "888888888";
+        payload.emergencyContact = emergencyContact;
+        
+ 
+        payload.userId = this.state.user.userId;
+        payload.pgId = this.state.user.pgId;
+        
+        data = JSON.stringify(payload);
+        debugger;
+        const resident = await ResidentService.updateResidentInfo(data);
         this.setState({formtype:Labels.RESIDENT_FORMS.PREFERENCES});
 
     }
 
     async handlePreferenceForm(event){
         event.preventDefault();
-        const data = JSONUtil.formToJson(event.target);
+        let  data = JSONUtil.formToJson(event.target);
+        let  payload = {};
         console.log(data);
- //       const resident = await ResidentService.registerResident(data);
-//        this.props.history.push(Routes.RESIDENTS);
+        data = JSON.parse(data);
+        payload.preference = data;
+ 
+        payload.userId = this.state.user.userId;
+        payload.pgId = this.state.user.pgId;
+        data = JSON.stringify(payload);
+        debugger;
+        const resident = await ResidentService.updateResidentInfo(data);
         this.setState({formCompleteStatus:Labels.RESIDENT_FORM_STATUS.COMPLETE});
+        this.setState({formtype:Labels.RESIDENT_FORMS.REGISTRATION_COMPLETE});
 
     }
     
@@ -182,6 +255,10 @@ class CreateResidentForm extends React.Component {
         return(<PreferenceForm submitHandler={this.handlePreferenceForm}
             prefs = {prefs} highlight={Labels.RESIDENT_FORMS.PREFERENCES} />)
    }
+    
+    residentRegistrationCompleteView(){
+    	return(<><h1>Registration Complete </h1> </>)
+    }
 
 
     render() {
@@ -199,6 +276,10 @@ class CreateResidentForm extends React.Component {
             return(<>{this.residentEmergencyFormView()} </>)
         else if (this.state.formtype === Labels.RESIDENT_FORMS.PREFERENCES)
             return(<>{this.residentPreferenceFormView()} </>)
+        else if (this.state.formtype === Labels.RESIDENT_FORMS.REGISTRATION_COMPLETE)
+            return(<>{this.residentRegistrationCompleteView()} </>)
+
+            
         else
             return(<>{this.residentBasicInfoview()}</>) 
         

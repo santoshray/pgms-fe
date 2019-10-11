@@ -3,6 +3,8 @@ import axios from 'axios';
 import authUtil from '../util/AuthUtil';
 
 const getResidents=()=>{
+    console.log("calling getResidents");
+
     return axios.get(
         RESTURLS.RESIDENTS,
         authUtil.authHeader()
@@ -10,24 +12,30 @@ const getResidents=()=>{
 }
 
 const getResidentProfile=(residentId)=>{
+    console.log("calling getResidentProfile");
+
     return axios.get(
-        RESTURLS.RESIDENTS+'/'+residentId,
+        RESTURLS.RESIDENT_ROOT+'/'+residentId,
         authUtil.authHeader()
     );
 }
 
 const registerResident=(payload)=>{
-	console.log(payload)
+    console.log("registerResident");
+
+    console.log(payload);
     return axios.post(
-        RESTURLS.REGISTER_RESIDENT,
+        RESTURLS.RESIDENT_CREATE,
         payload,
         authUtil.authHeader()
         );
 }
 
 const updateResidentInfo=(payload)=>{
-    return axios.put(
-        RESTURLS.RESIDENTS,
+    console.log("updateResidentInfo");
+    console.log(payload);
+    return axios.post(
+        RESTURLS.RESIDENT_UPDATE,
         payload,
         authUtil.authHeader()
         );

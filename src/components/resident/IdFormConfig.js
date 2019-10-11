@@ -1,12 +1,12 @@
 const IdFormConfig = {
     type:{
-        name:"IdentificationType",
+        name:"type",
         title: "Identification Type",
         default:"",
         placeholder:"Enter the type of Identification Document",
         hide:false,
         readonly:false,
-        options:["PASSPORT","ADHAR CARD","DRIVING LICENSE","OTHERS"],
+        options:["PASSPORT","ADHAR_CARD","DRIVING_LICENSE","OTHERS"],
         comment:""
     },
     number:{

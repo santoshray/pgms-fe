@@ -11,7 +11,7 @@ const PreferenceFormConfig = {
         comment:"" 
     },
     newspaper:{
-        name:"newspaper",
+        name:"newsPaper",
         title:"News Paper",
         default:"",
         placeholder:"Choose",
